@@ -18,9 +18,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const deepgram = createClient(process.env.DEEPGRAM_API_KEY);
 
+app.use('/audio', express.static('public/audio'));
+app.use('/tts', express.static(path.join(__dirname, 'tts')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/tts', express.static(path.join(__dirname, 'tts'))); // Serve generated TTS files
 
 const educationPrompts = {
   '1': 'Explain like I am in Class 1 to 5. Use very simple language and fun examples.',
@@ -62,26 +63,28 @@ const synthesizeSpeech = async (text, outPath) => {
 app.post('/twilio-webhook', async (req, res) => {
   const { RecordingUrl, From, Digits } = req.body;
   const categoryId = Digits || '1';
+  const callerId = From.replace('+', '');
+
   console.log("📞 From:", From);
   console.log("🎙️ Recording URL:", RecordingUrl);
-  console.log("📚 Category:", categoryId);
+  console.log("📚 Selected Category:", categoryId);
 
   const recordingDir = path.join(__dirname, 'recordings');
   const ttsDir = path.join(__dirname, 'tts');
   fs.mkdirSync(recordingDir, { recursive: true });
   fs.mkdirSync(ttsDir, { recursive: true });
 
-  const audioFilePath = path.join(recordingDir, `${From}_${Date.now()}.mp3`);
-  const ttsFileName = `${From}_reply.mp3`;
+  const audioFilePath = path.join(recordingDir, `${callerId}_${Date.now()}.mp3`);
+  const ttsFileName = `${callerId}_reply.mp3`;
   const ttsFilePath = path.join(ttsDir, ttsFileName);
 
   try {
     const audioStream = await axios.get(RecordingUrl, { responseType: 'stream' });
-    const audioWriter = fs.createWriteStream(audioFilePath);
-    audioStream.data.pipe(audioWriter);
+    const writer = fs.createWriteStream(audioFilePath);
+    audioStream.data.pipe(writer);
 
-    audioWriter.on('finish', async () => {
-      console.log(`✅ Saved caller audio to ${audioFilePath}`);
+    writer.on('finish', async () => {
+      console.log(`✅ Saved audio to ${audioFilePath}`);
 
       const { result } = await deepgram.listen.prerecorded.transcribeUrl(
         { url: RecordingUrl },
@@ -97,45 +100,54 @@ app.post('/twilio-webhook', async (req, res) => {
       console.log("📝 Transcript:", transcript);
 
       if (!transcript) {
-        return res.type('text/xml').send(`<Response><Say>Sorry, I couldn't understand that.</Say></Response>`);
+        const errorTwiml = new twimlLib.VoiceResponse();
+        errorTwiml.say("Sorry, I couldn't understand your question. Please try again.");
+        return res.type('text/xml').send(errorTwiml.toString());
       }
 
-      // Replace this mock response with GPT when ready
       const prompt = educationPrompts[categoryId];
-      // const fullPrompt = `${prompt}\n\nQuestion: ${transcript}`;
-      // const gptResponse = await openai.chat.completions.create({...});
-      // const reply = gptResponse.choices[0].message.content.trim();
-      const reply = "This is a mock explanation for testing purposes.";
+      const reply = `This is a mock answer for: "${transcript}". ${prompt}`;
 
-      console.log("🤖 AI Reply:", reply);
+      // TODO: Replace with actual GPT response
+      // const gptResponse = await openai.chat.completions.create(...);
+      // const reply = gptResponse.choices[0].message.content.trim();
 
       const success = await synthesizeSpeech(reply, ttsFilePath);
 
       if (!success) {
-        return res.type('text/xml').send(`<Response><Say>Sorry, the system encountered an error.</Say></Response>`);
+        const failTwiml = new twimlLib.VoiceResponse();
+        failTwiml.say("Sorry, we encountered an error while generating your answer.");
+        return res.type('text/xml').send(failTwiml.toString());
       }
 
-      const absoluteTTSUrl = `${req.protocol}://${req.get('host')}/tts/${ttsFileName}`;
-      const twiml = new twimlLib.VoiceResponse();
-      twiml.play(absoluteTTSUrl);
-      return res.type('text/xml').send(twiml.toString());
+      const publicTTSUrl = `${req.protocol}://${req.get('host')}/tts/${ttsFileName}`;
+      const responseTwiml = new twimlLib.VoiceResponse();
+      responseTwiml.say("Here is your answer.");
+      responseTwiml.play(publicTTSUrl);
+      responseTwiml.say("Thank you for calling Guru Call. Goodbye!");
+
+      return res.type('text/xml').send(responseTwiml.toString());
     });
 
-    audioWriter.on('error', err => {
-      console.error('❌ File save error:', err);
-      return res.type('text/xml').send(`<Response><Say>Sorry, failed to save your audio.</Say></Response>`);
+    writer.on('error', err => {
+      console.error('❌ Audio write error:', err);
+      const errTwiml = new twimlLib.VoiceResponse();
+      errTwiml.say("We could not process your audio. Please try again.");
+      return res.type('text/xml').send(errTwiml.toString());
     });
 
   } catch (err) {
-    console.error("❌ Error:", err.message);
-    return res.status(500).send('Internal error');
+    console.error("❌ Server error:", err.message);
+    const errTwiml = new twimlLib.VoiceResponse();
+    errTwiml.say("Unexpected error occurred. Please try again later.");
+    return res.type('text/xml').send(errTwiml.toString());
   }
 });
 
 app.get('/', (req, res) => {
-  res.send('🌐 Voice AI Tutor is live.');
+  res.send('🌐 Voice AI Tutor is live and listening.');
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server live at http://localhost:${PORT}`);
 });
