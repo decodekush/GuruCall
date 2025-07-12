@@ -35,17 +35,28 @@ const educationPrompts = {
 
 const synthesizeSpeech = async (text, outPath) => {
   try {
-    const { data: audioStream } = await deepgram.speak.request(
+    const voiceId = 'EXAVITQu4vr4xnSDxMaL'; // Use default voice or replace with a custom one
+    const response = await axios.post(
+      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
       {
         text,
-        model: 'aura-asteria-en',
-        encoding: 'mp3',
+        model_id: 'eleven_monolingual_v1',
+        voice_settings: {
+          stability: 0.5,
+          similarity_boost: 0.7
+        }
       },
-      { responseType: 'stream' }
+      {
+        headers: {
+          'xi-api-key': process.env.ELEVENLABS_API_KEY,
+          'Content-Type': 'application/json'
+        },
+        responseType: 'stream'
+      }
     );
 
     const writer = fs.createWriteStream(outPath);
-    audioStream.pipe(writer);
+    response.data.pipe(writer);
 
     return new Promise((resolve, reject) => {
       writer.on('finish', () => {
@@ -55,10 +66,11 @@ const synthesizeSpeech = async (text, outPath) => {
       writer.on('error', reject);
     });
   } catch (err) {
-    console.error('❌ Deepgram TTS Error:', err.response?.data || err.message);
+    console.error('❌ ElevenLabs TTS Error:', err.response?.data || err.message);
     return false;
   }
 };
+
 
 app.post('/twilio-webhook', async (req, res) => {
   const { RecordingUrl, From, Digits } = req.body;
