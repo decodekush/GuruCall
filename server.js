@@ -33,11 +33,21 @@ const educationPrompts = {
   '7': 'Explain for Arts students. Use historical, social, or creative context depending on the question.'
 };
 
+import axios from 'axios';
+import fs from 'fs';
+
 const synthesizeSpeech = async (text, outPath) => {
+  if (!text) {
+    console.error("❌ ElevenLabs TTS Error: empty text.");
+    return false;
+  }
+
   try {
-    const voiceId = 'EXAVITQu4vr4xnSDxMaL'; // Use default voice or replace with a custom one
+    const voiceId = 'EXAVITQu4vr4xnSDxMaL'; // Example: Rachel
+    const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
+
     const response = await axios.post(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+      url,
       {
         text,
         model_id: 'eleven_monolingual_v1',
@@ -49,11 +59,14 @@ const synthesizeSpeech = async (text, outPath) => {
       {
         headers: {
           'xi-api-key': process.env.ELEVENLABS_API_KEY,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'audio/mpeg'
         },
         responseType: 'stream'
       }
     );
+
+    console.log("🔁 ElevenLabs headers:", response.headers);
 
     const writer = fs.createWriteStream(outPath);
     response.data.pipe(writer);
@@ -63,8 +76,12 @@ const synthesizeSpeech = async (text, outPath) => {
         console.log(`✅ TTS saved at ${outPath}`);
         resolve(true);
       });
-      writer.on('error', reject);
+      writer.on('error', err => {
+        console.error('❌ Writer error:', err.message);
+        reject(err);
+      });
     });
+
   } catch (err) {
     console.error('❌ ElevenLabs TTS Error:', err.response?.data || err.message);
     return false;
