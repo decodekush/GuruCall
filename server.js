@@ -33,9 +33,6 @@ const educationPrompts = {
   '7': 'Explain for Arts students. Use historical, social, or creative context depending on the question.'
 };
 
-import axios from 'axios';
-import fs from 'fs';
-
 const synthesizeSpeech = async (text, outPath) => {
   if (!text) {
     console.error("❌ ElevenLabs TTS Error: empty text.");
