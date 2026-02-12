@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply font-sans antialiased;
+    background-color: #0f172a;
+    color: #e2e8f0;
+    margin: 0;
+  }
+  
+  ::selection {
+    @apply bg-primary-500/30 text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white transition-all duration-300 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-dark-900;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white transition-all duration-300 border rounded-xl border-dark-600 bg-dark-800/50 hover:bg-dark-700 hover:border-dark-500 focus:outline-none focus:ring-2 focus:ring-dark-500 focus:ring-offset-2 focus:ring-offset-dark-900;
+  }
+  
+  .btn-accent {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white transition-all duration-300 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 hover:shadow-glow-accent focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-dark-900;
+  }
+  
+  .card {
+    @apply p-6 transition-all duration-300 border rounded-2xl bg-dark-800/50 border-dark-700 backdrop-blur-sm hover:border-dark-600;
+  }
+  
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-1;
+  }
+  
+  .gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400;
+  }
+  
+  .gradient-text-accent {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-primary-400;
+  }
+  
+  .section-heading {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl font-display;
+  }
+  
+  .section-subheading {
+    @apply max-w-2xl mx-auto mt-4 text-lg text-dark-300 sm:text-xl;
+  }
+  
+  .glass {
+    @apply bg-dark-800/30 backdrop-blur-xl border border-dark-700/50;
+  }
+  
+  .glow-ring {
+    @apply ring-2 ring-primary-500/20 ring-offset-2 ring-offset-dark-900;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient 8s ease infinite;
+  }
+  
+  .mask-gradient {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Phone animation styles */
+.phone-ring {
+  animation: phone-ring 1.5s ease-in-out infinite;
+}
+
+@keyframes phone-ring {
+  0%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(15deg); }
+  20% { transform: rotate(-13deg); }
+  30% { transform: rotate(10deg); }
+  40% { transform: rotate(-8deg); }
+  50% { transform: rotate(5deg); }
+  60% { transform: rotate(0deg); }
+}
+
+/* Pulse rings for call animation */
+.pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 1;
+}
