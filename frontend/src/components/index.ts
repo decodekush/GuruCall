@@ -4,5 +4,6 @@ export { default as Features } from './Features';
 export { default as HowItWorks } from './HowItWorks';
 export { default as TechStack } from './TechStack';
 export { default as Categories } from './Categories';
+export { default as VoiceDemo } from './VoiceDemo';
 export { default as CTA } from './CTA';
 export { default as Footer } from './Footer';

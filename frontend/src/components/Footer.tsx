@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Phone, Mail, Github, Linkedin, Twitter, Heart, ArrowUp } from 'lucide-react';
+import { Phone, Mail, Github, Linkedin, Heart, ArrowUp, AlertCircle } from 'lucide-react';
 
 const footerLinks = {
   product: [
@@ -23,9 +23,9 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { name: 'GitHub', icon: Github, href: '#' },
-  { name: 'LinkedIn', icon: Linkedin, href: '#' },
-  { name: 'Twitter', icon: Twitter, href: '#' },
+  { name: 'GitHub', icon: Github, href: 'https://github.com/decodekush' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/kushagra-agarwal-736876287/' },
+  // { name: 'Twitter', icon: Twitter, href: '#' },
 ];
 
 export default function Footer() {
@@ -150,15 +150,29 @@ export default function Footer() {
             className="flex items-center gap-2 text-sm text-dark-400 hover:text-white transition-colors"
           >
             <Mail className="w-4 h-4 text-primary-400" />
-            hello@gurucall.ai
+            kushagraagarwal1612@gmail.com
           </a>
-          <a
-            href="tel:+1234567890"
-            className="flex items-center gap-2 text-sm text-dark-400 hover:text-white transition-colors"
-          >
+          <div className="flex items-center gap-2 text-sm text-dark-500">
             <Phone className="w-4 h-4 text-accent-400" />
-            +1 (234) 567-890
-          </a>
+            <span>+1 (XXX) XXX-XXXX</span>
+            <span className="text-xs text-amber-400">(Demo)</span>
+          </div>
+        </div>
+
+        {/* Prototype Disclaimer */}
+        <div className="mt-8 p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl">
+          <div className="flex items-start gap-3 text-sm text-amber-400/80">
+            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-medium text-amber-400 mb-1">Prototype Notice</p>
+              <p>
+                GuruCall is currently a prototype demonstrating the concept of voice-based AI education. 
+                The phone numbers displayed are placeholders. Real telephony integration requires carrier 
+                partnerships and compliance with government regulations. The web-based voice demo is fully 
+                functional and showcases the core AI capabilities.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Bottom Bar */}

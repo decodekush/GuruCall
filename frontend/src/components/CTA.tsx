@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import { Phone, Sparkles, ArrowRight, CheckCircle } from 'lucide-react';
+import { Phone, Sparkles, ArrowRight, CheckCircle, Info } from 'lucide-react';
 
 const benefits = [
-  'Free to try - no credit card required',
+  'Voice demo available to try now',
   'Works on any phone device',
   'Available 24/7 worldwide',
   'Instant AI-powered answers',
@@ -43,8 +43,8 @@ export default function CTA() {
               </h2>
               
               <p className="mt-4 text-lg text-dark-300">
-                Join thousands of learners who are already using GuruCall to get 
-                instant answers to their academic questions. No app, no internet — just call.
+                Experience the future of voice-based education with our interactive demo. 
+                Try our AI tutor now — no app, no registration required.
               </p>
 
               {/* Benefits */}
@@ -84,35 +84,45 @@ export default function CTA() {
                 </motion.div>
 
                 <h3 className="mb-2 text-xl font-semibold text-white font-display">
-                  Call GuruCall Now
+                  Try GuruCall Demo
                 </h3>
-                <p className="mb-6 text-dark-400">
-                  Dial the number below to start learning
+                <p className="mb-4 text-dark-400">
+                  Experience AI-powered voice education
                 </p>
 
-                {/* Phone Number */}
-                <div className="px-6 py-4 mb-6 text-2xl font-bold text-white rounded-xl bg-dark-800 font-mono">
-                  +1 (800) GURU-CALL
+                {/* Demo Phone Number */}
+                <div className="px-6 py-4 mb-4 text-xl font-bold text-white rounded-xl bg-dark-800 font-mono">
+                  +1 (800) XXX-XXXX
+                </div>
+                
+                {/* Disclaimer */}
+                <div className="flex items-start gap-2 px-4 py-3 mb-6 text-xs text-amber-400 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                  <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <span className="text-left">
+                    <strong>Demo Number:</strong> This is a placeholder. Real telephony requires carrier integration and government compliance.
+                  </span>
                 </div>
 
                 {/* CTA Buttons */}
                 <div className="space-y-3">
-                  <motion.button
+                  <motion.a
+                    href="#try-it"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full btn-primary gap-2"
+                    className="w-full btn-primary gap-2 inline-flex justify-center"
                   >
-                    <Phone className="w-5 h-5" />
-                    Call Now
-                  </motion.button>
-                  <motion.button
+                    <Sparkles className="w-5 h-5" />
+                    Try Voice Demo
+                  </motion.a>
+                  <motion.a
+                    href="#how-it-works"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full btn-secondary gap-2"
+                    className="w-full btn-secondary gap-2 inline-flex justify-center"
                   >
                     Learn More
                     <ArrowRight className="w-5 h-5" />
-                  </motion.button>
+                  </motion.a>
                 </div>
               </motion.div>
             </div>

@@ -29,10 +29,10 @@ const features = [
   },
   {
     icon: Brain,
-    title: 'GPT-4o Intelligence',
-    description: 'Powered by OpenAI\'s GPT-4o for contextual, curriculum-aligned academic explanations.',
-    color: 'from-emerald-500 to-emerald-600',
-    bgColor: 'bg-emerald-500/10',
+    title: 'Groq-Powered AI',
+    description: 'Powered by Groq\'s Llama 3.3 70B with conversation memory for personalized, context-aware explanations.',
+    color: 'from-orange-500 to-red-600',
+    bgColor: 'bg-orange-500/10',
   },
   {
     icon: Volume2,
@@ -65,7 +65,7 @@ const features = [
   {
     icon: Shield,
     title: 'Secure Sessions',
-    description: 'Session data stored securely in MySQL and MongoDB with enterprise-grade protection.',
+    description: 'Session data stored securely in MongoDB with enterprise-grade encryption and protection.',
     color: 'from-indigo-500 to-indigo-600',
     bgColor: 'bg-indigo-500/10',
   },
