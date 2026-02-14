@@ -1,0 +1,45 @@
+{
+  "name": "gurucall-backend",
+  "version": "1.0.0",
+  "description": "Voice-based AI Tutor Backend",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "ai",
+    "voice",
+    "education",
+    "gemini",
+    "twilio"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@camb-ai/sdk": "^1.0.1",
+    "@deepgram/sdk": "^3.9.0",
+    "@elevenlabs/elevenlabs-js": "^2.35.0",
+    "@google/generative-ai": "^0.21.0",
+    "axios": "^1.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0",
+    "groq-sdk": "^0.37.0",
+    "mongoose": "^8.8.0",
+    "twilio": "^5.4.0",
+    "uuid": "^10.0.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "@types/uuid": "^10.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
