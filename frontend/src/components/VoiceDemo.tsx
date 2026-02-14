@@ -50,7 +50,7 @@ const VoiceDemo = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const callTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const callTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const BACKEND_URL = 'http://localhost:3000';
 
