@@ -7,7 +7,6 @@ import {
   Globe, 
   Clock, 
   Shield, 
-  Users,
   Zap,
   BookOpen
 } from 'lucide-react';
