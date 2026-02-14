@@ -9,7 +9,6 @@ const userSchema = new Schema<IUserDocument>(
       type: String,
       required: true,
       unique: true,
-      index: true,
     },
     name: {
       type: String,
