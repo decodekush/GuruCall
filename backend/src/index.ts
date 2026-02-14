@@ -18,7 +18,7 @@ const app: Express = express();
 
 // Middleware
 app.use(cors({
-  origin: config.nodeEnv === 'development' ? '*' : config.baseUrl,
+  origin: config.nodeEnv === 'development' ? '*' : [config.baseUrl, config.frontendUrl],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));

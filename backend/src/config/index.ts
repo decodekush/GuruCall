@@ -36,6 +36,7 @@ interface Config {
     uri: string;
   };
   baseUrl: string;
+  frontendUrl: string;
 }
 
 const config: Config = {
@@ -67,6 +68,7 @@ const config: Config = {
     uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/gurucall',
   },
   baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+  frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
 };
 
 // Validate required config
