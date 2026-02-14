@@ -52,7 +52,7 @@ const VoiceDemo = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const callTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const BACKEND_URL = 'http://localhost:3000';
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
   // Check backend status
   useEffect(() => {
