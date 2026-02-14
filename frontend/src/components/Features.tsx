@@ -164,29 +164,29 @@ export default function Features() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-wrap items-center justify-center gap-8 mt-16 lg:gap-16"
         >
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <Users className="w-8 h-8 text-primary-400" />
             <div>
               <div className="text-2xl font-bold text-white">1000+</div>
               <div className="text-sm text-dark-400">Active Users</div>
             </div>
-          </div>
-          <div className="w-px h-12 bg-dark-700 hidden sm:block" />
+          </div> */}
+          {/* <div className="w-px h-12 bg-dark-700 hidden sm:block" />
           <div className="flex items-center gap-3">
             <Phone className="w-8 h-8 text-accent-400" />
             <div>
               <div className="text-2xl font-bold text-white">50K+</div>
               <div className="text-sm text-dark-400">Calls Handled</div>
             </div>
-          </div>
-          <div className="w-px h-12 bg-dark-700 hidden sm:block" />
+          </div> */}
+          {/* <div className="w-px h-12 bg-dark-700 hidden sm:block" />
           <div className="flex items-center gap-3">
             <Clock className="w-8 h-8 text-emerald-400" />
             <div>
               <div className="text-2xl font-bold text-white">99.9%</div>
               <div className="text-sm text-dark-400">Uptime</div>
             </div>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </section>
